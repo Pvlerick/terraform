@@ -197,6 +197,10 @@ func (b *PlanGraphBuilder) Steps() []GraphTransformer {
 
 		&AttachDependenciesTransformer{},
 
+		// Nested data blocks should be loaded after every other resource has
+		// done its thing.
+		&NestedTransformer{Config: b.Config},
+
 		// Make sure data sources are aware of any depends_on from the
 		// configuration
 		&attachDataResourceDependsOnTransformer{},
